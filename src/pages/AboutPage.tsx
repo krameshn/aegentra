@@ -157,7 +157,7 @@ export default function AboutPage() {
                     <Avatar className="w-36 h-36 mx-auto mb-8 ring-4 ring-accent/10 group-hover:ring-accent/20 transition-all duration-300">
                       <AvatarImage src={member.photoUrl} alt={member.name} />
                       <AvatarFallback className="text-3xl bg-accent/10 text-accent">
-                        {member.name.split(' ').map(n => n[0]).join('')}
+                        {member.name.split(' ').map((n: string) => n[0]).join('')}
                       </AvatarFallback>
                     </Avatar>
                     <CardTitle className="text-xl mb-4">{member.name}</CardTitle>

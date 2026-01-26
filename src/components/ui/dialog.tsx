@@ -30,8 +30,8 @@ const Dialog = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement> & {
 
 const DialogTrigger = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ onClick, ...props }, ref) => {
+  React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean }
+>(({ onClick, asChild, ...props }, ref) => {
   const context = React.useContext(DialogContext)
   return (
     <button

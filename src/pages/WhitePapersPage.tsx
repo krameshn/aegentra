@@ -37,13 +37,16 @@ export default function WhitePapersPage() {
     }
   };
 
-  const formatDate = (timestamp: bigint) => {
-    const date = new Date(Number(timestamp) / 1000000);
+  const formatDate = (timestamp: bigint | string | number) => {
+    const ms = typeof timestamp === 'bigint' ? Number(timestamp) / 1000000 : typeof timestamp === 'string' ? Date.parse(timestamp) : timestamp;
+    const date = new Date(ms);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
-  const formatFileSize = (bytes: bigint) => {
-    const kb = Number(bytes) / 1024;
+  const formatFileSize = (bytes: bigint | number | undefined) => {
+    if (!bytes) return '0 KB';
+    const numBytes = typeof bytes === 'bigint' ? Number(bytes) : bytes;
+    const kb = numBytes / 1024;
     if (kb < 1024) return `${kb.toFixed(0)} KB`;
     return `${(kb / 1024).toFixed(1)} MB`;
   };
@@ -95,7 +98,7 @@ export default function WhitePapersPage() {
             </div>
           ) : whitePapers && whitePapers.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {whitePapers.map((paper) => (
+              {whitePapers.map((paper: WhitePaper) => (
                 <Card 
                   key={Number(paper.id)} 
                   className="group overflow-hidden hover:shadow-lg transition-all duration-300 border-muted hover:border-accent/30 bg-muted/30"

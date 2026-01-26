@@ -30,8 +30,8 @@ const Sheet = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement> & { 
 
 const SheetTrigger = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ onClick, ...props }, ref) => {
+  React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean }
+>(({ onClick, asChild, ...props }, ref) => {
   const context = React.useContext(SheetContext)
   return (
     <button

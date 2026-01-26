@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import type { JobListing, ContactSubmission, CompanyInfo, LeadershipMember, Service, Solution } from '@/backend';
+import type { JobListing, CompanyInfo, LeadershipMember, Service, Solution, WhitePaper } from '@/backend';
 
 // Company Info
 export function useCompanyInfo() {
@@ -84,6 +84,36 @@ export function useSubmitContact() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contacts'] });
+    },
+  });
+}
+
+// White Papers
+export function useWhitePapers() {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<WhitePaper[]>({
+    queryKey: ['whitePapers'],
+    queryFn: async () => {
+      if (!actor) throw new Error('Actor not initialized');
+      return actor.getWhitePapers();
+    },
+    enabled: !!actor && !isFetching,
+  });
+}
+
+// Increment Download Count
+export function useIncrementDownloadCount() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (paperId: bigint | string) => {
+      if (!actor) throw new Error('Actor not initialized');
+      return actor.incrementDownloadCount(paperId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['whitePapers'] });
     },
   });
 }
