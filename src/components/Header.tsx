@@ -26,7 +26,7 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center group">
             <img
-              src="/assets/generated/aegentra-logo-v2-transparent.dim_400x200.png"
+              src="/src/aegentra-logo.png"
               alt="Aegentra"
               className="h-11 w-auto transition-transform duration-300 group-hover:scale-105"
             />
